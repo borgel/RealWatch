@@ -6,6 +6,16 @@
 
 #include <stdint.h>
 
+enum Mode {
+   M_HiZ,
+   M_Out,
+   M_In
+};
+enum State {
+   S_Out,
+   S_In,
+};
+
 //TODO move to util?
 #define ARRAY_SIZE(array) \
        (sizeof(array) / sizeof(array[0]))
@@ -15,6 +25,8 @@ static uint16_t PinsLarge[] = {GPIO_PIN_4, GPIO_PIN_5, GPIO_PIN_6, GPIO_PIN_7};
 
 static void resetAllPins(void);
 
+static void setPinModestate(uint16_t pin, enum Mode, enum State);
+
 void array_Init(void) {
    // init all GPIOs to HiZ
    resetAllPins();
@@ -22,6 +34,24 @@ void array_Init(void) {
 
 // FIXME does this API make sense?
 void array_SetHour(uint8_t const hour) {
+   // reset all pins?
+   // reconfigure pins
+
+   GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+   GPIO_InitStruct.Pin = PinsSmall[0];
+   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+   HAL_GPIO_WritePin(GPIOA, PinsSmall[0], GPIO_PIN_SET);
+
+   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+   GPIO_InitStruct.Pin = PinsSmall[1];
+   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+   HAL_GPIO_WritePin(GPIOA, PinsSmall[1], GPIO_PIN_RESET);
+}
+
 }
 
 static void resetAllPins(void) {

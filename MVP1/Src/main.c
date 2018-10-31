@@ -17,6 +17,8 @@ int main(void)
    // drop to lowest power (RTC alive)
    HAL_PWR_EnterSTANDBYMode();
 
+   array_SetHour(1);
+
    while(true) {
       //TODO software
    }
