@@ -1,5 +1,6 @@
 #include "platform_hw.h"
 #include "iprintf.h"
+#include "array.h"
 
 #include <stdlib.h>
 
