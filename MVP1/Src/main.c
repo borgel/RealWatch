@@ -11,6 +11,9 @@ int main(void)
 
    iprintf("\r\nStarting... | Built "__DATE__":"__TIME__")\r\n");
 
+   // drop to lowest power (RTC alive)
+   HAL_PWR_EnterSTANDBYMode();
+
    while(true) {
       //TODO software
    }

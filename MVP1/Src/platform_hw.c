@@ -4,6 +4,7 @@
 #include "stm32f0xx_hal.h"
 #include "stm32f0xx.h"
 #include "stm32f0xx_it.h"
+#include "stm32f0xx_hal_pwr.h"
 
 #include <string.h>
 
@@ -29,6 +30,10 @@ static void setKeepAlivePin(bool enable);
 bool platformHW_Init(void) {
    // Configure the system clock
    SystemClock_Config();
+
+   // unlock RTC register access
+   __HAL_RCC_PWR_CLK_ENABLE();
+   HAL_PWR_EnableBkUpAccess();
 
    // Initialize all configured peripherals
    MX_GPIO_Init();
