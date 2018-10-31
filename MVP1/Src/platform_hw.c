@@ -179,57 +179,6 @@ static void MX_GPIO_Init(void)
    /* GPIO Ports Clock Enable */
    __HAL_RCC_GPIOA_CLK_ENABLE();
    __HAL_RCC_GPIOB_CLK_ENABLE();
-
-   // configure LED matrix control lines
-   GPIO_InitStruct.Pin = GPIO_PIN_8;
-   //FIXME pull low, float high?
-   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-   GPIO_InitStruct.Pull = GPIO_NOPULL;
-   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-   GPIO_InitStruct.Alternate = 0;
-   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-   GPIO_InitStruct.Pin = GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5;
-   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-   // IR_TX_Pin init with TIM17
-
-   GPIO_InitStruct.Pin = USER_BUTTON_PIN;
-   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
-   GPIO_InitStruct.Pull = GPIO_PULLUP;
-   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-   HAL_GPIO_Init(USER_BUTTON_PORT, &GPIO_InitStruct);
-
-   // user button EXTIs
-   HAL_NVIC_SetPriority(EXTI0_1_IRQn, 2, 0);
-   HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
-
-   // power enable strap line
-   GPIO_InitStruct.Pin = POWER_EN_PIN;
-   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-   GPIO_InitStruct.Pull = GPIO_PULLUP;
-   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-   HAL_GPIO_Init(POWER_EN_PORT, &GPIO_InitStruct);
-
-   // setup diagnostic testpoints
-   GPIO_InitStruct.Pin = TP_A5_PIN | TP_A15_PIN;
-   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-   GPIO_InitStruct.Pull = GPIO_NOPULL;
-   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-   HAL_GPIO_Init(TP_A15_PORT, &GPIO_InitStruct);
-
-   GPIO_InitStruct.Pin = TP_B8_PIN;
-   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-   HAL_GPIO_Init(TP_B8_PORT, &GPIO_InitStruct);
-
-   //force B8 low
-   HAL_GPIO_WritePin(TP_B8_PORT, TP_B8_PIN, GPIO_PIN_RESET);
-
-   // EXTI4_15 used for TP B8
-   HAL_NVIC_SetPriority(EXTI4_15_IRQn, 2, 0);
-   HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
 }
 
 /**
