@@ -25,22 +25,12 @@ BUILD_DIR = build
 ######################################
 # source
 ######################################
-ifeq ($(CPU), STM32F051x8)
-   STARTUP_FILE = Drivers/CMSIS/Device/ST/STM32F0xx/Source/Templates/gcc/startup_stm32f051x8.s
-   LDSCRIPT = STM32F051R8Tx_FLASH.ld
-else ifeq ($(CPU), STM32F030x6)
-   STARTUP_FILE = Drivers/CMSIS/Device/ST/STM32F0xx/Source/Templates/gcc/startup_stm32f030x6.s
-   LDSCRIPT = STM32F030K6Tx_FLASH.ld
-endif
+STARTUP_FILE = Drivers/CMSIS/Device/ST/STM32F0xx/Source/Templates/gcc/startup_stm32f051x8.s
+LDSCRIPT = STM32F051R8Tx_FLASH.ld
 
 # may want to be more selective about this in the future
 C_SOURCES  = $(wildcard Src/*.c)
 C_SOURCES += $(wildcard Drivers/STM32F0xx_HAL_Driver/Src/*.c)
-
-# FIXME this is a crappy hack, but wants to fight makefiles forever?
-# add submodules
-C_SOURCES += $(wildcard submodules/baf/src/*.c)
-C_SOURCES += $(wildcard submodules/yabi/src/*.c)
 
 ASM_SOURCES = $(STARTUP_FILE)
 
